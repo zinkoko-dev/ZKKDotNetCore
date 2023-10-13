@@ -1,6 +1,7 @@
 ﻿using System;
 using ZKKDotNetCore.ConsoleApp.CRUDExamples;
 using ZKKDotNetCore.ConsoleApp.DapperExamples;
+using ZKKDotNetCore.ConsoleApp.EFCoreExamples;
 
 namespace ZKKDotNetCore.ConsoleApp
 {
@@ -13,8 +14,11 @@ namespace ZKKDotNetCore.ConsoleApp
             //CRUDExample cRUDExample = new CRUDExample();
             //cRUDExample.Run();
 
-            DapperExample dapperExample = new DapperExample();
-            dapperExample.Run();
+            //DapperExample dapperExample = new DapperExample();
+            //dapperExample.Run();
+
+            EFCoreExample eFCoreExample = new EFCoreExample();
+            eFCoreExample.Run();
 
             Console.WriteLine("Press any key to continue... ");
             Console.ReadKey();
