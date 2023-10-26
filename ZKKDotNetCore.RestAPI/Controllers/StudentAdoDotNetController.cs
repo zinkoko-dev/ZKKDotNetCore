@@ -169,16 +169,9 @@ namespace ZKKDotNetCore.RestAPI.Controllers
                 return NotFound(model);
             }
 
-            StudentDataModel model1 = new StudentDataModel()
-            {
-                Student_Name = student.Student_Name,
-                Student_City = student.Student_City,
-                Student_Gender = student.Student_Gender
-            };
-
             model.IsSuccess = result > 0;
             model.Message = message;
-            model.StudentDataModel = model1;
+            model.StudentDataModel = student;
             return Ok(model);
         }
 
