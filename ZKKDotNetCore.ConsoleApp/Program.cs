@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ZKKDotNetCore.ConsoleApp.HttpClientExamples;
+using ZKKDotNetCore.ConsoleApp.RefitExamples;
 using ZKKDotNetCore.ConsoleApp.RestClientExamples;
 
 namespace ZKKDotNetCore.ConsoleApp
@@ -14,8 +15,11 @@ namespace ZKKDotNetCore.ConsoleApp
             Console.WriteLine("Press any key to continue... ");
             Console.ReadKey();
 
-            RestClientExample restClientExample = new RestClientExample();
-            await restClientExample.Run();
+            RefitExample refit = new RefitExample();
+            await refit.Run();
+
+            //RestClientExample restClientExample = new RestClientExample();
+            //await restClientExample.Run();
 
             //HttpClientExample httpClientExamples = new HttpClientExample();
             //await httpClientExamples.Run();

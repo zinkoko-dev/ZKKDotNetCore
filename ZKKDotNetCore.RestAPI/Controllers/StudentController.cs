@@ -9,12 +9,17 @@ namespace ZKKDotNetCore.RestAPI.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        AppDbContext db = new AppDbContext();
+        private readonly AppDbContext _db;
+
+        public StudentController(AppDbContext appDbContext)
+        {
+                this._db = appDbContext;    
+        }
 
         [HttpGet]
         public IActionResult GetStudents()
         {
-            var list = db.Students.ToList();
+            var list = _db.Students.ToList();
             StudentListResponseModel stuList = new StudentListResponseModel()
             {
                 IsSuccess = true,
@@ -24,11 +29,34 @@ namespace ZKKDotNetCore.RestAPI.Controllers
             return Ok(stuList);
         }
 
+        [HttpGet("{pageNo}/{pageSize}")]
+        public IActionResult GetStudents(int pageNo, int pageSize)
+        {
+            //pageNo = 1;
+            //pageSize = 10;
+            //int endRowNo = pageNo * pageSize;
+            //int startRowNo = endRowNo - pageSize + 1;
+            //// 1,  1 - 10 // 0
+            //// 2, 11 - 20 // 10
+            //// 3, 21 - 30 // 20, 21 - 30
+            List<StudentDataModel> lst = _db
+                .Students
+                .Skip((pageNo - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            StudentListResponseModel model = new StudentListResponseModel()
+            {
+                IsSuccess = true,
+                Message = "Success",
+                ListStudentDataModel = lst
+            };
+            return Ok(model);
+        }
+
         [HttpGet("{id}")]
         public IActionResult EditStudent(int id)
         {
-            AppDbContext db = new AppDbContext();
-            StudentDataModel item = db.Students.FirstOrDefault(x => x.Student_Id == id);
+            StudentDataModel item = _db.Students.FirstOrDefault(x => x.Student_Id == id);
 
             StudentResponseModle student = new StudentResponseModle();
             if (item is null)
@@ -47,9 +75,8 @@ namespace ZKKDotNetCore.RestAPI.Controllers
         [HttpPost]
         public IActionResult SaveStudent([FromBody] StudentDataModel student)
         {
-            AppDbContext db = new AppDbContext();
-            db.Students.Add(student);
-            var result = db.SaveChanges();
+            _db.Students.Add(student);
+            var result = _db.SaveChanges();
 
             string message = result > 0 ? "Save Successful !!" : "Error Successful !!";
             StudentResponseModle model = new StudentResponseModle()
@@ -64,8 +91,7 @@ namespace ZKKDotNetCore.RestAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateStudent(int id, [FromBody] StudentDataModel student)
         {
-            AppDbContext db = new AppDbContext();
-            StudentDataModel item = db.Students.FirstOrDefault(x => x.Student_Id == id);
+            StudentDataModel item = _db.Students.FirstOrDefault(x => x.Student_Id == id);
 
             StudentResponseModle model = new StudentResponseModle();
 
@@ -80,7 +106,7 @@ namespace ZKKDotNetCore.RestAPI.Controllers
             item.Student_City = student.Student_City;
             item.Student_Gender = student.Student_Gender;
 
-            var result = db.SaveChanges();
+            var result = _db.SaveChanges();
             string message = result > 0 ? "Update Successful !!" : "Update Error!!";
             model.IsSuccess = result > 0;
             model.Message = message;
@@ -115,8 +141,7 @@ namespace ZKKDotNetCore.RestAPI.Controllers
         public IActionResult PatchBlog(int id, [FromBody] StudentDataModel student)
         {
             StudentResponseModle model = new StudentResponseModle();
-            AppDbContext db = new AppDbContext();
-            var item = db.Students.FirstOrDefault(x => x.Student_Id == id);
+            var item = _db.Students.FirstOrDefault(x => x.Student_Id == id);
 
             if (item is null)
             {
@@ -138,7 +163,7 @@ namespace ZKKDotNetCore.RestAPI.Controllers
                 item.Student_Gender = student.Student_Gender;
             }
 
-            var result = db.SaveChanges();
+            var result = _db.SaveChanges();
             string message = result > 0 ? "Updating Successful." : "Updating Failed.";
 
             model = new StudentResponseModle()
@@ -153,8 +178,7 @@ namespace ZKKDotNetCore.RestAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteStudent(int id)
         {
-            AppDbContext db = new AppDbContext();
-            var item = db.Students.FirstOrDefault(x => x.Student_Id == id);
+            var item = _db.Students.FirstOrDefault(x => x.Student_Id == id);
 
             StudentResponseModle model = new StudentResponseModle();
             if (item == null)
@@ -164,8 +188,8 @@ namespace ZKKDotNetCore.RestAPI.Controllers
                 return NotFound(model);
             }
 
-            db.Students.Remove(item);
-            var result = db.SaveChanges();
+            _db.Students.Remove(item);
+            var result = _db.SaveChanges();
             String message = result > 0 ? "Delete Successful !!" : "Delete Error !!";
             model.IsSuccess = result > 0;
             model.Message = message;
