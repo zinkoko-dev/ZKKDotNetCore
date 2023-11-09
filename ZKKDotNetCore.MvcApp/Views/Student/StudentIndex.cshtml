@@ -1,0 +1,37 @@
+﻿@model StudentListResponseModel;
+
+@{
+    int rowCount = 0;
+}
+
+<partial name="_ValidateMessage" />
+
+<p>Page count : @Model.PageCount</p>
+<p>Page RowCount : @Model.PageRowCount</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">City</th>
+            <th scope="col">Gender</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(StudentDataModel item in Model.ListStudentDataModel)
+        {
+            <tr>
+                <td>
+                    <a href="/Student/Edit/@item.Student_Id" class="btn btn-warning">Edit</a>
+                    <a href="/Student/Delete/@item.Student_Id" class="btn btn-danger">Delete</a>
+                </td>
+                <th scope="row">@(++rowCount)</th>
+                <td>@item.Student_Name</td>
+                <td>@item.Student_City</td>s
+                <td>@item.Student_Gender</td>
+            </tr>
+        }
+        
+    </tbody>
+</table>
