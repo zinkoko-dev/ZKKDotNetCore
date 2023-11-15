@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <div id="alert"></div>
     <input type="text" name="" class="form-control" id="name">
     <button type="button" class="btn btn-success" id="btnSave">Save</button>
     <button type="button" class="btn btn-info" id="btnUpdate">Update</button>
@@ -43,7 +44,17 @@
 
             let inputName = $('#name').val();
             if (inputName === null || inputName === undefined || inputName === '') {
-                alert('please enter name');
+                $('#alert').empty();
+
+                $('#alert').append(`
+
+                <div class="alert alert-danger" role="alert">
+                    please enter name !!!
+                </div>
+
+                `);
+
+                hideAlert();
                 return;
             }
 
@@ -65,7 +76,17 @@
         $('#btnUpdate').click(function () {
 
             if (updateId === null || updateId === '' || updateId === undefined) {
-                alert('you don\'t have user for update !!')
+                $('#alert').empty();
+
+                $('#alert').append(`
+
+                <div class="alert alert-danger" role="alert">
+                    don\'t have user for update !!
+                </div>
+
+                `);
+
+                hideAlert();
                 $('#name').val('');
                 return;
             }
@@ -147,6 +168,13 @@
 
         function saveTblStudent(list) {
             localStorage.setItem('Tbl_Student', JSON.stringify(list));
+        }
+
+        function hideAlert() {
+            const alertElement = $('.alert');
+            setTimeout(() => {
+                alertElement.fadeOut('slow');
+            }, 1500);
         }
 
     </script>
