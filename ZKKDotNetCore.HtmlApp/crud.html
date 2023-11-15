@@ -10,17 +10,20 @@
 </head>
 
 <body>
-    <input type="text" name="" class="form-control" id="txtTest">
+    <input type="text" name="" class="form-control" id="name">
     <button type="button" class="btn btn-success" id="btnSave">Save</button>
+    <button type="button" class="btn btn-info" id="btnUpdate">Update</button>
 
     <table class="table">
         <thead>
             <tr>
+                <th scope="col">Action</th>
                 <th scope="col">No</th>
+                <th scope="col">UUID</th>
                 <th scope="col">Name</th>
             </tr>
         </thead>
-        <tbody id="tbl">
+        <tbody id="stuTable">
 
         </tbody>
     </table>
@@ -33,51 +36,119 @@
         crossorigin="anonymous"></script>
 
     <script>
-
+        let updateId = '';
         loadTable();
 
         $('#btnSave').click(function () {
 
-            let list = [];
-            let inputVal = $('#txtTest').val();
-            let jsonStr = localStorage.getItem('Tbl_Test');
-
-            if (!(jsonStr === null || jsonStr === undefined || jsonStr === '')) {
-                list = JSON.parse(jsonStr);
+            let inputName = $('#name').val();
+            if (inputName === null || inputName === undefined || inputName === '') {
+                alert('please enter name');
+                return;
             }
 
-            list.push(inputVal);
-            localStorage.setItem('Tbl_Test', JSON.stringify(list));
+            let list = getStudents();
+            const stuObj = {
+                Id: generateUUID(),
+                Name: inputName
+            }
 
-            $('#txtTest').val('');
-            $('#tbl').empty();
-            $('#txtTest').focus();
+            list.push(stuObj);
 
+            saveTblStudent(list);
+
+            $('#name').val('');
+            $('#name').focus();
             loadTable();
-            // sessionStorage.setItem('Test_Val', val);
         });
+
+        $('#btnUpdate').click(function () {
+
+            if (updateId === null || updateId === '' || updateId === undefined) {
+                alert('you don\'t have user for update !!')
+                $('#name').val('');
+                return;
+            }
+
+            let stuList = getStudents();
+            let index = stuList.findIndex(x => x.Id === updateId);
+            updateId = '';
+            stuList[index].Name = $('#name').val();
+            saveTblStudent(stuList);
+            loadTable();
+            $('#btnSave').prop('disabled', false);
+        });
+
+        function Delete(element) {
+            let stuList = getStudents();
+            let id = $(element).data('id');
+            let index = stuList.findIndex(x => x.Id === id);
+            stuList.splice(index, 1);
+            saveTblStudent(stuList);
+            loadTable();
+        }
 
         function loadTable() {
 
-            let list = [];
-            let jsonStr = localStorage.getItem('Tbl_Test');
+            $('#stuTable').empty();
+            $('#name').val('');
 
-            if (!(jsonStr === null || jsonStr === undefined || jsonStr === '')) {
-                list = JSON.parse(jsonStr);
-            }
+            let list = getStudents();
 
             $.each(list, function (key, value) {
                 let tblRow = `
                 <tr>
+                    <td>
+                        <button type="button" class="btn btn-warning" onclick="Edit(this)" data-id="${value.Id}">Edit</buttom>
+                        <button type="button" class="btn btn-danger" onclick="Delete(this)" data-id="${value.Id}">Delete</buttom>
+                    </td>
                     <td>${key + 1}</td>
-                    <td>${value}</td>
+                    <td>${value.Id}</td>
+                    <td>${value.Name}</td>
                 </tr>
                 `;
 
-                $('#tbl').append(tblRow);
-                // console.log(key + ' : ' + value);
+                $('#stuTable').append(tblRow);
             });
         }
+
+        function generateUUID() {
+            return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+        }
+
+        function Edit(element) {
+            let stuList = getStudents();
+            let id = $(element).data('id');
+
+            const result = stuList.filter(function (x) {
+                return x.Id === id;
+            });
+
+            let student = result[0];
+            $('#name').val(student.Name);
+            $('#name').focus();
+            $('#btnSave').prop('disabled', true);
+            updateId = student.Id;
+        }
+
+        function getStudents() {
+
+            let list = [];
+            let jsonStr = localStorage.getItem('Tbl_Student');
+
+            if (!(jsonStr === null || jsonStr === undefined || jsonStr === '')) {
+                list = JSON.parse(jsonStr);
+            }
+
+            return list;
+        }
+
+        function saveTblStudent(list) {
+            localStorage.setItem('Tbl_Student', JSON.stringify(list));
+        }
+
     </script>
 
 </body>
