@@ -81,8 +81,15 @@
 
         $('#btnUpdate').click(function () {
 
+            let inputName = $('#name').val();
+
             if (updateId === null || updateId === '' || updateId === undefined) {
                 Notiflix.Notify.warning('Don\'t have user for update');
+                return;
+            }
+
+            if (inputName === null || inputName === undefined || inputName === '' || inputName.includes(' ')) {
+                Notiflix.Notify.warning('Name must not be empty');
                 return;
             }
 
@@ -237,6 +244,18 @@
 
             Notiflix.Report.success("Success", message, "Okay");
         }
+
+        $(document).ready(function () {
+            $('#name').on('input', function () {
+                if ($('#btnSave').prop('disabled')) {
+                    if ($('#name').val().trim() === '') {
+                        $('#btnSave').prop('disabled', false);
+                    } else {
+                        $('#btnSave').prop('disabled', true);
+                    }
+                }
+            });
+        });
 
     </script>
 
