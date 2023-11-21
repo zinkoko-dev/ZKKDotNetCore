@@ -92,6 +92,7 @@
             stuList[index].Name = $('#name').val();
             saveTblStudent(stuList);
             loadTable();
+            Notiflix.Notify.success('Update Successful');
             $('#btnSave').prop('disabled', false);
 
         });
