@@ -13,61 +13,69 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="plugins/datepicker/datepicker.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link
+        href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/af-2.6.0/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/cr-1.7.0/date-1.5.1/fc-4.3.0/fh-3.4.0/kt-2.11.0/r-2.5.0/rg-1.4.1/rr-1.4.1/sc-2.3.0/sb-1.6.0/sp-2.2.0/sl-1.7.0/sr-1.3.0/datatables.min.css"
+        rel="stylesheet">
 </head>
 
 <body>
+    <div style="margin-left: 2%; margin-right: 70%; margin-bottom: 30px;">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="enter name">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <div class="icheck-primary icheck-inline">
+                <input type="radio" id="male" name="gender" value="Male" />
+                <label for="male">Male</label>
+            </div>
+            <div class="icheck-primary icheck-inline">
+                <input type="radio" id="female" name="gender" value="Female" />
+                <label for="female">Female</label>
+            </div>
+            <div class="icheck-primary icheck-inline">
+                <input type="radio" id="other" name="gender" value="Other" />
+                <label for="other">Other</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="dob" class="form-label">DOB :</label>
+            <input type="datetime" class="form-control" id="dob">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Subject :</label>
+            <div class="icheck-primary icheck-inline">
+                <input type="checkbox" id="chb1" name="subject" value="Html" />
+                <label for="chb1">Html</label>
+            </div>
+            <div class="icheck-primary icheck-inline">
+                <input type="checkbox" id="chb2" name="subject" value="CSS" />
+                <label for="chb2">CSS</label>
+            </div>
+            <div class="icheck-primary icheck-inline">
+                <input type="checkbox" id="chb3" name="subject" value="JavaScript" />
+                <label for="chb3">JavaScript</label>
+            </div>
+        </div>
 
-    <div style="margin-bottom: 10px;">
-        <label><b>Name : </b></label>
-    <input type="text" id="name" placeholder="enter your name"><br>
+        <button style="margin-right: 10px;" type="button" class="btn btn-success" id="btnSave">Save</button>
+        <button style="display: none;" type="button" class="btn btn-secondary" id="btnCancel">Cancle</button>
+        <button style="display: none;" type="button" class="btn btn-info" id="btnUpdate">Update</button>
     </div>
-
-    <div style="margin-bottom: 10px;">
-        <label><b>Gender : </b></label>
-        <div class="icheck-primary icheck-inline">
-            <input type="radio" id="male" name="gender" value="Male" />
-            <label for="male">Male</label>
-        </div>
-        <div class="icheck-primary icheck-inline">
-            <input type="radio" id="female" name="gender" value="Female" />
-            <label for="female">Female</label>
-        </div>
-        <div class="icheck-primary icheck-inline">
-            <input type="radio" id="other" name="gender" value="Other" />
-            <label for="other">Other</label>
-        </div>
-    </div>
-
-    <div style="margin-bottom: 10px;">
-        <lable><b>DOB : </b></lable>
-        <input type="text" id="dob">
-    </div>
-    
-
-    <div style="margin-bottom: 10px;">
-        <label><b>Subject : </b></label>
-        <div class="icheck-primary icheck-inline">
-            <input type="checkbox" id="chb1" value="Html" />
-            <label for="chb1">Html</label>
-        </div>
-        <div class="icheck-primary icheck-inline">
-            <input type="checkbox" id="chb2" value="CSS" />
-            <label for="chb2">CSS</label>
-        </div>
-        <div class="icheck-primary icheck-inline">
-            <input type="checkbox" id="chb3" value="JavaScript" />
-            <label for="chb3">JavaScript</label>
-        </div>
-    </div>
-    <button style="margin-top: 10px;" type="button" class="btn btn-success" id="btnSave">Save</button>
 
     <!--#region Table -->
-    <table style="margin-top: 50px;" class="table">
+    <!-- <table style="margin-top: 50px;" class="table">
         <thead>
             <tr>
                 <th scope="col">No</th>
                 <th scope="col">UUID</th>
                 <th scope="col">Name</th>
+                <th scope="col">Email</th>
                 <th scope="col">Gender</th>
                 <th scope="col">DOB</th>
                 <th scope="col">Subject</th>
@@ -76,8 +84,27 @@
         <tbody id="stuTable">
 
         </tbody>
-    </table>
+    </table> -->
     <!--#endregion Table -->
+
+    <table id="tbDataTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>UUID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>DOB</th>
+                <th>Subject</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="stuTable">
+
+        </tbody>
+
+    </table>
 
     <!--#region Java Script -->
 
@@ -88,20 +115,52 @@
         crossorigin="anonymous"></script>
     <script src="plugins/datepicker/datepicker.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script
+        src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/af-2.6.0/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/cr-1.7.0/date-1.5.1/fc-4.3.0/fh-3.4.0/kt-2.11.0/r-2.5.0/rg-1.4.1/rr-1.4.1/sc-2.3.0/sb-1.6.0/sp-2.2.0/sl-1.7.0/sr-1.3.0/datatables.min.js"></script>
+
 
     <script>
-
+        let updateId = '';
         loadTable();
+
+        new DataTable('#tbDataTable');
 
         $('#dob').datepicker({
             autoHide: true,
             format: 'dd-mm-yyyy'
         });
 
+        $('#btnUpdate').click(function () {
+
+            let inputName = $('#name').val();
+            let email = $('#email').val();
+            let gender = $("input[name='gender']:checked").val();
+            let dob = $('#dob').val();
+            let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            let subject = Array.from(checkboxes).map(checkbox => checkbox.value);
+
+            let stuList = getStudents();
+            let index = stuList.findIndex(x => x.Id === updateId);
+            updateId = '';
+            stuList[index].Name = inputName;
+            stuList[index].Email = email;
+            stuList[index].Gender = gender;
+            stuList[index].DOB = dob;
+            stuList[index].Subject = subject;
+            saveTblStudent(stuList);
+            loadTable();
+            // Notiflix.Notify.success('Update Successful');
+            clearInput();
+            $('#btnSave').show();
+            $('#btnCancel').hide();
+            $('#btnUpdate').hide();
+        });
+
         $('#btnSave').click(function (e) {
             e.preventDefault();
 
             let inputName = $('#name').val();
+            let email = $('#email').val();
             let gender = $("input[name='gender']:checked").val();
             let dob = $('#dob').val();
             let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
@@ -111,6 +170,7 @@
             const stuObj = {
                 Id: generateUUID(),
                 Name: inputName,
+                Email: email,
                 Gender: gender,
                 DOB: dob,
                 Subject: subject
@@ -120,10 +180,7 @@
 
             saveTblStudent(list);
 
-            $('#name').val('');
-            $('#dob').val('');
-            $('input[type="checkbox"]').prop('checked', false);
-            $('#male').prop('checked', false);
+            clearInput();
             $('#name').focus();
             loadTable();
 
@@ -138,6 +195,21 @@
             }).showToast();
 
         });
+
+        $('#btnCancel').click(function () {
+            clearInput();
+            $('#btnSave').show();
+            $('#btnCancel').hide();
+            $('#btnUpdate').hide();
+        });
+
+        function clearInput() {
+            $('#name').val('');
+            $('#email').val('');
+            $('#dob').val('');
+            $('input[type="checkbox"]').prop('checked', false);
+            $('input[name="gender"]').prop('checked', false);
+        }
 
         function getStudents() {
 
@@ -154,7 +226,6 @@
         function loadTable() {
 
             $('#stuTable').empty();
-            $('#name').val('');
 
             let list = getStudents();
 
@@ -164,14 +235,43 @@
                         <td>${key + 1}</td>
                         <td>${value.Id}</td>
                         <td>${value.Name}</td>
+                        <td>${value.Email}</td>
                         <td>${value.Gender}</td>
                         <td>${value.DOB}</td>
                         <td>${value.Subject}</td>
+                        <td>
+                        <button type="button" style="margin-right: 3px;" class="btn btn-warning" onclick="Edit(this)" data-id="${value.Id}">Edit</buttom>
+                        <button type="button" class="btn btn-danger" onclick="Delete(this)" data-id="${value.Id}">Delete</buttom>
+                        </td>
                     </tr>
                     `;
 
                 $('#stuTable').append(tblRow);
             });
+        }
+
+        function Edit(element) {
+            clearInput();
+            let stuList = getStudents();
+            let id = $(element).data('id');
+
+            const result = stuList.filter(function (x) {
+                return x.Id === id;
+            });
+
+            let student = result[0];
+            $('#name').val(student.Name);
+            $('#email').val(student.Email);
+            $("input[name='gender'][value='" + student.Gender + "']").prop("checked", true);
+            $('#dob').val(student.DOB);
+            student.Subject.forEach(function (value) {
+                $("input[type='checkbox'][value='" + value + "']").prop("checked", true);
+            });
+            $('#name').focus();
+            $('#btnSave').hide();
+            $('#btnCancel').show();
+            $('#btnUpdate').show();
+            updateId = student.Id;
         }
 
         function saveTblStudent(list) {
