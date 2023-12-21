@@ -1,0 +1,86 @@
+﻿@model StudentDataResponseModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Student Page";
+    string message = null;
+    bool isSuccess = false;
+    if (TempData["Message"] != null)
+    {
+        message = TempData["Message"].ToString();
+        isSuccess = Convert.ToBoolean(TempData["isSuccess"]);
+    }
+
+    int pageNo = Model.PageSetting.PageNo;
+    int pageSize = Model.PageSetting.PageSize;
+    var count = (pageNo - 1) * pageSize;
+}
+
+@if (message != null)
+{
+    <div class="alert alert-@(isSuccess ? "success" : "danger") " role="alert">
+        @message
+    </div>
+}
+
+<h4>
+    <a href="/studentajax/create" class="btn btn-success">
+        <i class="fa fa-plus"></i>
+    </a>
+    Student List
+</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Action</th>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">City</th>
+            <th scope="col">Gender</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stu in Model.Students)
+        {
+            <tr>
+                <td>
+                    <a class="btn btn-warning" href="/studentajax/edit/@stu.Student_Id">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <a class="btn btn-danger btnDelete" data-stu-id="@stu.Student_Id">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+                <th scope="row">@(++count)</th>
+                <td>@stu.Student_Name</td>
+                <td>@stu.Student_City</td>
+                <td>@stu.Student_Gender</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@await Html.PartialAsync("_Pagination", Model.PageSetting)
+@section scripts {
+    <script>
+        $('.btnDelete').click(function (e) {
+            e.preventDefault();
+
+            var _reqModel = {
+                Student_Id: $(this).data('stu-id'),
+            };
+
+            $.ajax({
+                url: '/studentajax/delete',
+                type: 'POST',
+                data: {
+                    reqModel: _reqModel
+                },
+                success: function (data) {
+                    showMessage(data, "/studentajax/list");
+                },
+                error: function (request, status, error) {
+                    console.log({ request, status, error });
+                }
+            });
+        })
+    </script>
+}

@@ -1,0 +1,17 @@
+﻿@model StudentDataModel
+<form action="/student/update/@Model.Student_Id" method="post">
+    <div class="mb-3">
+        <label class="form-label">Student Name</label>
+        <input type="text" name="Student_Name" value="@Model.Student_Name" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Student City</label>
+        <input type="text" name="Student_City" value="@Model.Student_Gender" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Student Gender</label>
+        <input type="text" name="Student_Gender" value="@Model.Student_Gender" class="form-control">
+    </div>
+    <a href="/student" class="btn btn-secondary">Cancle</a>
+    <button type="submit" class="btn btn-success">Update</button>
+</form>

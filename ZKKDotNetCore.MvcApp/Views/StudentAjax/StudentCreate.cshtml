@@ -1,0 +1,49 @@
+﻿<h3>Student Ajax</h3>
+<div class="mb-3">
+    <label class="form-label">Student Name</label>
+    <input type="text" id="Student_Name" class="form-control">
+</div>
+<div class="mb-3">
+    <label class="form-label">Student City</label>
+    <input type="text" id="Student_City" class="form-control">
+</div>
+<div class="mb-3">
+    <label class="form-label">Student Gender</label>
+    <input type="text" id="Student_Gender" class="form-control">
+</div>
+<a href="/studentajax" class="btn btn-secondary">Cancle</a>
+<button type="button" class="btn btn-primary ladda-button" data-style="expand-left" id="btnSave">
+    <span class="ladda-label">Save</span>
+</button>
+
+@section scripts{
+    <script>
+        $('#btnSave').click(function (e) {
+            e.preventDefault();
+
+            var l = Ladda.create(this);
+            l.start();
+
+            var _reqModel = {
+                Student_Name: $('#Student_Name').val(),
+                Student_City: $('#Student_City').val(),
+                Student_Gender: $('#Student_Gender').val(),
+            };
+
+            $.ajax({
+                url: '/studentajax/save',
+                type: 'POST',
+                data: {
+                    reqModel: _reqModel
+                },
+                success: function (data) {
+                    l.stop();
+                    showMessage(data, "/studentajax/list");
+                },
+                error: function (request, status, error) {
+                    console.log({ request, status, error });
+                }
+            });
+        })
+    </script>
+}

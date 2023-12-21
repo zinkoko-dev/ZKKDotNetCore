@@ -1,0 +1,50 @@
+﻿@model StudentDataModel
+<div class="mb-3">
+    <label class="form-label">Student Name</label>
+    <input type="text" id="Student_Name" value="@Model.Student_Name" class="form-control">
+</div>
+<div class="mb-3">
+    <label class="form-label">Student City</label>
+    <input type="text" id="Student_City" value="@Model.Student_Gender" class="form-control">
+</div>
+<div class="mb-3">
+    <label class="form-label">Student Gender</label>
+    <input type="text" id="Student_Gender" value="@Model.Student_Gender" class="form-control">
+</div>
+<a href="/student" class="btn btn-secondary">Cancle</a>
+<button type="button" class="btn btn-primary ladda-button" data-style="expand-left" value="@Model.Student_Id" id="btnUpdate">
+    <span class="ladda-label">Save</span>
+</button>
+
+@section scripts {
+    <script>
+        $('#btnUpdate').click(function (e) {
+            e.preventDefault();
+
+            var l = Ladda.create(this);
+            l.start();
+
+            var _reqModel = {
+                Student_Name: $('#Student_Name').val(),
+                Student_City: $('#Student_City').val(),
+                Student_Gender: $('#Student_Gender').val(),
+                Student_Id: $('#btnUpdate').val()
+            };
+
+            $.ajax({
+                url: '/studentajax/update',
+                type: 'POST',
+                data: {
+                    reqModel: _reqModel
+                },
+                success: function (data) {
+                    l.stop();
+                    showMessage(data, "/studentajax/list");
+                },
+                error: function (request, status, error) {
+                    console.log({ request, status, error });
+                }
+            });
+        })
+    </script>
+}
