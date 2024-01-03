@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZKKDotNetCore.WindowsFormsA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZKKDotNetCore.RestAPI", "ZKKDotNetCore.RestAPI\ZKKDotNetCore.RestAPI.csproj", "{8A1F64D1-D81C-496F-B842-6CBCA404CBDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZKKDotNetCore.MvcApp", "ZKKDotNetCore.MvcApp\ZKKDotNetCore.MvcApp.csproj", "{D4851318-BAF3-4585-A0EC-4E5E203C895F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZKKDotNetCore.MvcApp", "ZKKDotNetCore.MvcApp\ZKKDotNetCore.MvcApp.csproj", "{D4851318-BAF3-4585-A0EC-4E5E203C895F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZKKDotNetCore.ATMWebApp", "ZKKDotNetCore.ATMWebApp\ZKKDotNetCore.ATMWebApp.csproj", "{9FA37BAD-0FA3-42D3-B794-B163BC43573C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D4851318-BAF3-4585-A0EC-4E5E203C895F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4851318-BAF3-4585-A0EC-4E5E203C895F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4851318-BAF3-4585-A0EC-4E5E203C895F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FA37BAD-0FA3-42D3-B794-B163BC43573C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FA37BAD-0FA3-42D3-B794-B163BC43573C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FA37BAD-0FA3-42D3-B794-B163BC43573C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FA37BAD-0FA3-42D3-B794-B163BC43573C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
