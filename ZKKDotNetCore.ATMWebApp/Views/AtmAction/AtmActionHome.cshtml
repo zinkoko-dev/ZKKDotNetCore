@@ -8,13 +8,13 @@
 {
     <style>
         .btn-custom {
-          font-size: 1.2rem;
-          background-color: #3072ee;
-          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-          border: none;
-          padding: 10px 30px;
-          color: white;
-          margin-left: 3px;
+            font-size: 1.2rem;
+            background-color: #3072ee;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+            border: none;
+            padding: 10px 30px;
+            color: white;
+            margin-left: 3px;
         }
     </style>
 }
@@ -83,69 +83,69 @@
 @section scripts
 {
     <script>
-        $('#depositButton').click(function() {
-              let depositValue = $('#depositAmount').val();
-              $.ajax({
+        $('#depositButton').click(function () {
+            let depositValue = $('#depositAmount').val();
+            $.ajax({
                 url: '/atmaction/deposit',
                 method: 'POST',
                 data: {
-                  DepositAmt: depositValue
+                    DepositAmt: depositValue
                 },
-                success: function(response) {
+                success: function (response) {
                     $('#depositModal').modal('hide');
                     $('#depositAmount').val('');
                     showMsg(response);
-                  console.log('Deposit successful');
+                    console.log('Deposit successful');
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     $('#depositModal').modal('hide');
                     $('#depositAmount').val('');
                     errorMessage("Failed to save deposit.");
-                  console.error('Error');
+                    console.error('Error');
                 }
-              });
-        });
-        
-        $('#withdrawButton').click(function() {
-                      let withdrawValue = $('#withdrawAmount').val();
-                      $.ajax({
-                        url: '/atmaction/withdraw',
-                        method: 'POST',
-                        data: {
-                          WithdrawAmt: withdrawValue
-                        },
-                        success: function(response) {
-                          $('#withdrawModal').modal('hide');
-                          $('#withdrawAmount').val('');
-                          showMsg(response);
-                          console.log('Withdraw successful:', response);
-                        },
-                        error: function(xhr, status, error) {
-                          $('#withdrawModal').modal('hide');
-                          $('#withdrawAmount').val('');
-                          errorMessage("Failed to save withdraw.");
-                          console.error('Error:', error);
-                        }
-                      });
-                });
-        
-        $('#showBalanceButton').click(function() {
-            $.ajax({
-              url: '/atmaction/showbalance',
-              method: 'GET',
-              dataType: 'json',
-              success: function(response) {
-                showInfoMessage(response);
-                console.log('Balance:', response);
-              },
-              error: function(xhr, status, error) {
-                errorMessage("Card holder not found.");
-                console.error('Error:', error);
-              }
             });
-          });
-        
-        $('#exitButton').click(function (){
+        });
+
+        $('#withdrawButton').click(function () {
+            let withdrawValue = $('#withdrawAmount').val();
+            $.ajax({
+                url: '/atmaction/withdraw',
+                method: 'POST',
+                data: {
+                    WithdrawAmt: withdrawValue
+                },
+                success: function (response) {
+                    $('#withdrawModal').modal('hide');
+                    $('#withdrawAmount').val('');
+                    showMsg(response);
+                    console.log('Withdraw successful:', response);
+                },
+                error: function (xhr, status, error) {
+                    $('#withdrawModal').modal('hide');
+                    $('#withdrawAmount').val('');
+                    errorMessage("Failed to save withdraw.");
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        $('#showBalanceButton').click(function () {
+            $.ajax({
+                url: '/atmaction/showbalance',
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    showInfoMessage(response);
+                    console.log('Balance:', response);
+                },
+                error: function (xhr, status, error) {
+                    errorMessage("Card holder not found.");
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+        $('#exitButton').click(function () {
             window.location.href = '/atmaction/exit';
         });
     </script>
