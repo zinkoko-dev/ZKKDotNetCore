@@ -23,6 +23,35 @@ public class AtmActionController : Controller
         return userId != null;
     }
 
+    public IActionResult Register()
+    {
+        if (CheckAuthUserId())
+        {
+            return Redirect("/atmaction/home");
+        }
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> SaveRegister(CardHolderDataModel reqModel)
+    {
+        var model = new CardHolderDataModel()
+        {
+            FirstName = reqModel.FirstName,
+            LastName = reqModel.LastName,
+            CardNumber = reqModel.CardNumber,
+            Pin = reqModel.Pin,
+            Balance = 0
+        };
+
+        await _appDbContext.CardHolders.AddAsync(model);
+        var result = await _appDbContext.SaveChangesAsync();
+
+        TempData["Message"] = result > 0 ?"Register Successful !!": "Register Fail !!";
+        TempData["IsSuccess"] = result > 0 ? true : false;
+        return View("Register");
+    }
+
     // GET
     [ActionName("Index")]
     public IActionResult AtmActionIndex()
