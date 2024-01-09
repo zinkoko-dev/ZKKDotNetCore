@@ -13,19 +13,19 @@ namespace ZKKDotNetCore.MvcApp.Interfaces
         [Get("/api/student/{pageNo}/{pageSize}")]
         Task<StudentListResponseModel> GetStudent(int pageNo, int pageSize = 10);
 
-        [Get("/api/blog/{id}")]
+        [Get("/api/student/{id}")]
         Task<StudentResponseModle> EditStudent(int id);
 
-        [Post("/api/blog")]
+        [Post("/api/student")]
         Task<StudentResponseModle> CreateStudent(StudentDataModel blog);
 
-        [Put("/api/blog/{id}")]
+        [Put("/api/student/{id}")]
         Task<StudentResponseModle> UpdateStudent(int id, StudentDataModel blog);
 
-        [Patch("/api/blog/{id}")]
+        [Patch("/api/student/{id}")]
         Task<StudentResponseModle> PathStudent(int id, StudentDataModel blog);
 
-        [Delete("/api/blog/{id}")]
+        [Delete("/api/student/{id}")]
         Task<StudentResponseModle> DeleteStudent(int id);
     }
 }
