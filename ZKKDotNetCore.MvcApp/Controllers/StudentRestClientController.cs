@@ -53,5 +53,27 @@ namespace ZKKDotNetCore.MvcApp.Controllers
             return Redirect("/StudentRestClient");
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            StudentResponseModle model = new StudentResponseModle();
+            RestRequest request = new RestRequest($"/api/Student/{id}", Method.Get);
+            //RestResponse response = await client.GetAsync(request);
+            RestResponse response = await _restClient.ExecuteAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonStr = response.Content!;
+                //Json to C# object
+                //SearilizeObject => C# to json
+                //DeserilizeObject => json to C#
+                model = JsonConvert.DeserializeObject<StudentResponseModle>(jsonStr)!;
+                Console.WriteLine(JsonConvert.SerializeObject(model, Formatting.Indented));
+            }
+
+            TempData["ControllerName"] = "StudentRestClient";
+            return View("~/Views/StudentRefit/Edit.cshtml", model);
+        }
+
+
     }
 }
