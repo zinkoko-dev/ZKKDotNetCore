@@ -74,6 +74,23 @@ namespace ZKKDotNetCore.MvcApp.Controllers
             return View("~/Views/StudentRefit/Edit.cshtml", model);
         }
 
+        public async Task<IActionResult> Update(int id, StudentDataModel reqModel)
+        {
+            RestRequest request = new RestRequest($"/api/Student/{id}", Method.Put);
+            request.AddBody(reqModel);
+            RestResponse response = await _restClient.ExecuteAsync(request);
+
+            return Redirect("/StudentRestClient");
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            RestRequest request = new RestRequest($"/api/Student/{id}", Method.Delete);
+            //RestResponse response = await client.GetAsync(request);
+            RestResponse response = await _restClient.ExecuteAsync(request);
+
+            return Redirect("/StudentRestClient");
+        }
 
     }
 }
