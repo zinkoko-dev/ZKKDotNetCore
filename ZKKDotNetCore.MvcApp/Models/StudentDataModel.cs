@@ -19,6 +19,20 @@ namespace ZKKDotNetCore.MvcApp.Models
         public List<StudentDataModel> Students { get; set; }
     }
 
+    public class StudentListResponseModel
+    {
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; }
+        public List<StudentDataModel> ListStudentDataModel { get; set; }
+    }
+
+    public class StudentResponseModle
+    {
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; }
+        public StudentDataModel StudentDataModel { get; set; }
+    }
+
     public class PageSettingModel
     {
         public PageSettingModel()
