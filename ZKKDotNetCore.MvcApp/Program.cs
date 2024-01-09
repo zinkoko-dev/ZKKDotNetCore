@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using ZKKDotNetCore.MvcApp.EFDbContext;
+using Refit;
+using ZKKDotNetCore.MvcApp.Interfaces;
+using RestSharp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,30 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 },
 ServiceLifetime.Transient,
 ServiceLifetime.Transient);
+
+#region Refit
+
+builder.Services
+    .AddRefitClient<IStudentApi>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration.GetSection("RestApiUrl").Value!));
+
+#endregion
+
+#region HttpClient
+
+//builder.Services.AddScoped<HttpClient>();
+builder.Services.AddScoped(x => new HttpClient 
+{ 
+    BaseAddress = new Uri(builder.Configuration.GetSection("RestApiUrl").Value!) 
+});
+
+#endregion
+
+#region RestClient
+
+builder.Services.AddScoped(x => new RestClient(builder.Configuration.GetSection("RestApiUrl").Value!));
+
+#endregion
 
 var app = builder.Build();
 
