@@ -13,9 +13,10 @@ namespace ZKKDotNetCore.ConsoleApp.HttpClientExamples
     {
         public async Task Run()
         {
+            await Read();
             //await Create("test","test","test");
             //await UpDate(25, "testnew", "testnew", "testnew");
-            await Delete(25);
+            //await Delete(25);
         }
 
         private async Task Read()

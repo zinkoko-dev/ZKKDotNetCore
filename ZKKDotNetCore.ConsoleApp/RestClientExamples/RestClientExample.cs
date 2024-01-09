@@ -14,11 +14,11 @@ namespace ZKKDotNetCore.ConsoleApp.RestClientExamples
     {
         public async Task Run()
         {
-            //await Read();
+            await Read();
             //await Create("test","test","test");
             //await Edit(26);
             //await UpDate(45, "testnew", "testnew", "testnew");
-            await Delete(26);
+            //await Delete(26);
         }
 
         private async Task Read()
