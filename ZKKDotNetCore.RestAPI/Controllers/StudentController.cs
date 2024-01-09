@@ -19,7 +19,7 @@ namespace ZKKDotNetCore.RestAPI.Controllers
         [HttpGet]
         public IActionResult GetStudents()
         {
-            var list = _db.Students.ToList();
+            var list = _db.Students.OrderByDescending(student => student.Student_Id).ToList();
             StudentListResponseModel stuList = new StudentListResponseModel()
             {
                 IsSuccess = true,

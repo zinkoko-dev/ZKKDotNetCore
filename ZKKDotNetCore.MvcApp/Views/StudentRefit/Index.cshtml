@@ -1,11 +1,25 @@
 ﻿@model StudentListResponseModel;
 @{
     int count = 0;
+    string controllerName = null;
+
+    if(TempData["ControllerName"] != null)
+    {
+        controllerName = TempData["ControllerName"].ToString();
+    }
 }
+
+<h4>
+    <a href="/@controllerName/createform" class="btn btn-success">
+        <i class="fa fa-plus"></i>
+    </a>
+    Student List
+</h4>
+
 <table class="table">
     <thead>
         <tr>
-            @* <th scope="col">Action</th> *@
+            <th scope="col">Action</th>
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">City</th>
@@ -16,14 +30,14 @@
         @foreach (var stu in Model.ListStudentDataModel)
         {
             <tr>
-                @* <td>
-                    <a class="btn btn-warning" href="/student/edit/@stu.Student_Id">
+                <td>
+                    <a class="btn btn-warning" href="/@controllerName/edit/@stu.Student_Id">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </a>
-                    <a class="btn btn-danger" href="/student/delete/@stu.Student_Id">
+                    <a class="btn btn-danger" href="/@controllerName/delete/@stu.Student_Id">
                         <i class="fa-solid fa-trash"></i>
                     </a>
-                </td> *@
+                </td>
                 <th scope="row">@(++count)</th>
                 <td>@stu.Student_Name</td>
                 <td>@stu.Student_City</td>
