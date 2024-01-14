@@ -103,6 +103,27 @@ namespace ZKKDotNetCore.MinimalApi.Features.Student
             })
             .WithName("PatchStudent")
             .WithOpenApi();
+
+            app.MapDelete("/Student/{id}", ([FromServices] AppDbContext db, int id) =>
+            {
+                var item = db.Students.FirstOrDefault(x => x.Student_Id == id);
+                if (item is null)
+                {
+                    var response = new { IsSuccess = false, Message = "No data found." };
+                    return Results.NotFound(response);
+                }
+
+                db.Students.Remove(item);
+                var result = db.SaveChanges();
+                StudentResponseModle model = new StudentResponseModle
+                {
+                    IsSuccess = result > 0,
+                    Message = result > 0 ? "Deleting Successful." : "Deleting Failed."
+                };
+                return Results.Ok(model);
+            })
+            .WithName("DeleteStudent")
+            .WithOpenApi();
         }
     }
 }
