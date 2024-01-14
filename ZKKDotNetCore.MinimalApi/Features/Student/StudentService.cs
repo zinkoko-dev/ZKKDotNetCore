@@ -64,6 +64,45 @@ namespace ZKKDotNetCore.MinimalApi.Features.Student
             })
             .WithName("UpdateStudent")
             .WithOpenApi();
+
+            app.MapPatch("/Student/{id}", ([FromServices] AppDbContext db, int id, StudentDataModel reqModel) =>
+            {
+                StudentResponseModle model = new StudentResponseModle();
+                var item = db.Students.FirstOrDefault(x => x.Student_Id == id);
+
+                if (item is null)
+                {
+                    model.IsSuccess = false;
+                    model.Message = "No data found.";
+                    return Results.NotFound(model);
+                }
+
+                if (!string.IsNullOrWhiteSpace(reqModel.Student_Name))
+                {
+                    item.Student_Name = reqModel.Student_Name;
+                }
+                if (!string.IsNullOrWhiteSpace(reqModel.Student_City))
+                {
+                    item.Student_City = reqModel.Student_City;
+                }
+                if (!string.IsNullOrWhiteSpace(reqModel.Student_Gender))
+                {
+                    item.Student_Gender = reqModel.Student_Gender;
+                }
+
+                var result = db.SaveChanges();
+                string message = result > 0 ? "Updating Successful." : "Updating Failed.";
+
+                model = new StudentResponseModle()
+                {
+                    IsSuccess = result > 0,
+                    Message = message,
+                };
+
+                return Results.Ok(model);
+            })
+            .WithName("PatchStudent")
+            .WithOpenApi();
         }
     }
 }
