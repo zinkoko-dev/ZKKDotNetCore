@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZKKDotNetCore.MvcApp", "ZKK
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZKKDotNetCore.ATMWebApp", "ZKKDotNetCore.ATMWebApp\ZKKDotNetCore.ATMWebApp.csproj", "{9FA37BAD-0FA3-42D3-B794-B163BC43573C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZKKDotNetCore.MinimalApi", "ZKKDotNetCore.MinimalApi\ZKKDotNetCore.MinimalApi.csproj", "{75C7A8C2-1B0D-4112-A81B-2B67E39F895C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZKKDotNetCore.MinimalApi", "ZKKDotNetCore.MinimalApi\ZKKDotNetCore.MinimalApi.csproj", "{75C7A8C2-1B0D-4112-A81B-2B67E39F895C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZKKDotNetCore.DbFirstCommandApp", "ZKKDotNetCore.DbFirstCommandApp\ZKKDotNetCore.DbFirstCommandApp.csproj", "{A3E3BCAA-719B-458A-8670-E7494E89BFEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{75C7A8C2-1B0D-4112-A81B-2B67E39F895C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75C7A8C2-1B0D-4112-A81B-2B67E39F895C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75C7A8C2-1B0D-4112-A81B-2B67E39F895C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3E3BCAA-719B-458A-8670-E7494E89BFEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3E3BCAA-719B-458A-8670-E7494E89BFEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3E3BCAA-719B-458A-8670-E7494E89BFEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3E3BCAA-719B-458A-8670-E7494E89BFEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
