@@ -1,33 +1,68 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using ZKKDotNetCore.ConsoleApp.Models;
 
 namespace ZKKDotNetCore.ConsoleApp.EFCoreExamples
 {
     public class EFCoreExample
     {
+        string appName = Assembly.GetExecutingAssembly().GetName().Name;
         public void Run()
         {
-            //Read();
+            Read();
             //Create("Zin Ko Ko", "Ygn", "Male");
             //Edit(10);
             //Update(12, "test name", "test city", "test gender");
             //Delete(12);
         }
 
-        private void Read()
+        private async Task Read()
         {
-            AppDbContext db = new AppDbContext();
-            var lst = db.Students.OrderByDescending(x => x.Student_Id).ToList();
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .WriteTo.File(
+                    "log/"+appName+"",
+                    rollingInterval: RollingInterval.Day,
+                    rollOnFileSizeLimit: true)
+                //.WriteTo.MSSqlServer(
+                //    connectionString: "Server=.;Database=ZKKDotNetCore;User ID=sa;Password=sasa;TrustServerCertificate=True;",
+                //    sinkOptions: new MSSqlServerSinkOptions
+                //    {
+                //        TableName = "LogEvents",
+                //        AutoCreateSqlTable = true
+                //    })
+                .CreateLogger();
 
-            foreach (var item in lst)
+            try
             {
-                Console.WriteLine(item.Student_Id);
-                Console.WriteLine(item.Student_Name);
-                Console.WriteLine(item.Student_City);
-                Console.WriteLine(item.Student_Gender);
+                AppDbContext db = new AppDbContext();
+                var lst = db.Students.OrderByDescending(x => x.Student_Id).ToList();
+
+                foreach (var item in lst)
+                {
+                    Console.WriteLine(item.Student_Id);
+                    Console.WriteLine(item.Student_Name);
+                    Console.WriteLine(item.Student_City);
+                    Console.WriteLine(item.Student_Gender);
+                }
+                Log.Information("Get All Student");
+                Log.Information(JsonConvert.SerializeObject(lst));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Unhandled exception");
+            }
+            finally
+            {
+                await Log.CloseAndFlushAsync();
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ZKKDotNetCore.ConsoleApp.EFCoreExamples;
 using ZKKDotNetCore.ConsoleApp.HttpClientExamples;
 using ZKKDotNetCore.ConsoleApp.RefitExamples;
 using ZKKDotNetCore.ConsoleApp.RestClientExamples;
@@ -15,8 +16,8 @@ namespace ZKKDotNetCore.ConsoleApp
             Console.WriteLine("Press any key to continue... ");
             Console.ReadKey();
 
-            RefitExample refit = new RefitExample();
-            await refit.Run();
+            //RefitExample refit = new RefitExample();
+            //await refit.Run();
 
             //RestClientExample restClientExample = new RestClientExample();
             //await restClientExample.Run();
@@ -30,8 +31,8 @@ namespace ZKKDotNetCore.ConsoleApp
             //DapperExample dapperExample = new DapperExample();
             //dapperExample.Run();
 
-            //EFCoreExample eFCoreExample = new EFCoreExample();
-            //eFCoreExample.Run();
+            EFCoreExample eFCoreExample = new EFCoreExample();
+            eFCoreExample.Run();
         }
     }
 }
