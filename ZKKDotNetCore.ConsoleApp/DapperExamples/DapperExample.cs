@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using ZKKDotNetCore.ConsoleApp.Models;
 
@@ -15,7 +15,8 @@ namespace ZKKDotNetCore.ConsoleApp.DapperExamples
             DataSource = ".",
             InitialCatalog = "ZKKDotNetCore",
             UserID = "sa",
-            Password = "sasa"
+            Password = "sasa",
+            TrustServerCertificate = true
         };
 
         public void Run()
